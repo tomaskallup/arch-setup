@@ -1,0 +1,4 @@
+#!/bin/sh
+xrandr --output DP1 --mode 2560x1440 --above LVDS1 --output LVDS1 --auto &
+~/.fehbg &
+~/.local/scripts/status &

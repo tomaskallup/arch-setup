@@ -1,0 +1,36 @@
+#!/bin/sh
+
+function get_battery() {
+  local BAT="$(cat /sys/class/power_supply/BAT0/capacity)"
+  local STATE="$(cat /sys/class/power_supply/BAT0/status)"
+
+  local STATUS=""
+
+  if [[ $STATE == "Charging" ]]; then
+    STATUS=" [C]"
+  fi
+
+  echo "Bat: $BAT%$STATUS"
+}
+
+function get_date() {
+  echo "$(date +'%d. %m. %Y %H:%M')"
+}
+
+function get_volume() {
+  local ON="$(amixer sget Master | sed -n "s/.* Left: .*\[\(on\)\].*/\1/p")"
+  local VOL="$(amixer sget Master | sed -n "s/.* Left: .*\[\([0-9]\+\)%\].*/\1/p")"
+
+  if [[ $ON == "on" ]]; then
+    VOL="$VOL%"
+  else
+    VOL="[M]"
+  fi
+
+  echo "Vol: $VOL"
+}
+
+while true; do
+  xsetroot -name " $(get_volume) | $(get_battery) | $(get_date) "
+  sleep 0.5
+done

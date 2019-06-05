@@ -1,0 +1,9 @@
+#!/bin/sh
+
+KB="$(printf 'cz\nus'| dmenu -l 5 -p 'Select keyboard')"
+
+if [[ $KB -eq "" ]]; then
+  exit
+fi
+
+eval "setxkbmap $KB"
