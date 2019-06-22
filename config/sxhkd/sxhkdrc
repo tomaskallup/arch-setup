@@ -1,0 +1,20 @@
+XF86Audio{Prev,Next,Stop,Play,Pause}
+  mpc {prev,next,stop,toggle,toggle} -q
+
+XF86Audio{Lower,Raise}Volume
+  amixer sset Master -D pulse 5%{-,+}
+
+XF86AudioMute
+  amixer sset Master -D pulse toggle
+
+super + shift + Return
+  $TERMINAL
+
+super + o ; {e,f,m,n}
+  {$TERMINAL -e $EDITOR,$BROWSER,$TERMINAL -e neomutt,$TERMINAL -e ncmpcpp}
+
+super + shift + {l, Tab, e}
+  {slock, keyboard, emoji}
+
+Print
+  maim /home/armeeh/Media/Screenshots/$(date +'%d-%m-%Y-%H:%M').jpg
