@@ -1,0 +1,6 @@
+#!/bin/sh
+
+CUSOR="$(xdotool getmouselocation | sed -e 's/ sc.*//' -e 's/ /\n/' -e 's/\(x\|y\)://g')"
+SCREENCONF="$(xrandr --current | sed -e '/disconnected/d' -e '/^\(\s\|S\)/d' -e 's/.* \([0-9]\+x[0-9]\++[0-9]\++[0-9]\+\) (.*/\1/')"
+
+echo $CUSOR

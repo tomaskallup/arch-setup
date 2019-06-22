@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -- junk $(cat ~/.config/emoji | cut -d '|' -f 1 | dmenu -p emoji)
+
+shift
+
+if [ $# -eq 0 ]; then
+    exit
+fi
+
+emoji=$(cat ~/.config/emoji | grep "^$(echo $@)|" | sed 's/.*|//' | tr -d '\n' | tr -d '\r')
+
+echo "$emoji" | xclip -selection clipboard

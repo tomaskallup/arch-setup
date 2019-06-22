@@ -1,36 +1,89 @@
 #!/bin/sh
 
-function get_battery() {
+SEPARATOR=" | ";
+
+get_date() {
+  echo "$(date +'%d. %m. %Y %H:%M')"
+}
+
+get_battery() {
   local BAT="$(cat /sys/class/power_supply/BAT0/capacity)"
   local STATE="$(cat /sys/class/power_supply/BAT0/status)"
 
   local STATUS=""
 
-  if [[ $STATE == "Charging" ]]; then
+  if [ $STATE = "Charging" ]; then
     STATUS=" [C]"
   fi
 
-  echo "Bat: $BAT%$STATUS"
+  echo "🔋: $BAT%$STATUS$SEPARATOR"
 }
 
-function get_date() {
-  echo "$(date +'%d. %m. %Y %H:%M')"
-}
+get_volume() {
+  local Master="$(amixer sget Master -D pulse)"
 
-function get_volume() {
-  local ON="$(amixer sget Master | sed -n "s/.* Left: .*\[\(on\)\].*/\1/p")"
-  local VOL="$(amixer sget Master | sed -n "s/.* Left: .*\[\([0-9]\+\)%\].*/\1/p")"
+  local Side="Left"
 
-  if [[ $ON == "on" ]]; then
+  local ON="$(echo $Master | sed -n "s/.* Left: .*\[\(on\)\].*/\1/p")"
+
+  if [ $ON = "" ]; then
+    Side="Mono"
+  fi
+
+  ON="$(echo $Master | sed -n "s/.* $Side: .*\[\(on\)\].*/\1/p")"
+  local VOL="$(echo $Master | sed -n "s/.* $Side: .*\[\([0-9]\+\)%\].*/\1/p")"
+
+  if [ $ON = "on" ]; then
     VOL="$VOL%"
   else
     VOL="[M]"
   fi
 
-  echo "Vol: $VOL"
+  echo "🔊: $VOL$SEPARATOR"
+}
+
+get_keyboard() {
+  local KB="$( setxkbmap -query | grep layout | sed -n "s/layout:\s*\(\w\+\)/\1/p" )"
+
+  echo "⌨: $KB$SEPARATOR"
+}
+
+get_mail() {
+  local MAILC="$( du -a ~/.local/share/mail/*/INBOX/new/* 2>/dev/null | sed -n '$=' )"
+
+  if [ -z $MAILC ]; then
+    MAILC=0
+  fi
+
+  echo "📧: $MAILC$SEPARATOR"
+}
+
+get_music() {
+  local MPCLEN="$(mpc | wc -l)"
+
+  if [ $MPCLEN -lt 2 ]; then
+    return
+  fi
+
+  local NAME="$(mpc | head -1)"
+  local STATE="$(mpc | head -2 | tail -1 | sed 's/\[\(\w\+\)\].*/\1/')"
+
+  local LEN="$(echo $NAME | wc -m)"
+
+  if [ $LEN -gt 50 ]; then
+    NAME="$(echo $NAME | cut -c 1-50)..."
+  fi
+
+  local ICON="📻"
+
+  if [ $STATE = "playing" ]; then
+    ICON="$ICON"
+  fi
+
+  echo "$ICON: $NAME$SEPARATOR"
 }
 
 while true; do
-  xsetroot -name " $(get_volume) | $(get_battery) | $(get_date) "
+  xsetroot -name " $(get_music)$(get_mail)$(get_keyboard)$(get_volume)$(get_battery)$(get_date) "
   sleep 0.5
 done
