@@ -3,5 +3,6 @@ eval $(gpg-agent --daemon) &
 eval $(ssh-agent) &
 xrandr --output LVDS1 --auto &
 /usr/bin/dunst &
+slack &
 ~/.fehbg &
 ~/.local/scripts/status &

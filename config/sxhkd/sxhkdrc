@@ -10,11 +10,11 @@ XF86AudioMute
 super + shift + Return
   $TERMINAL
 
-super + o ; {e,f,m,n}
-  {$TERMINAL -e $EDITOR,$BROWSER,$TERMINAL -e neomutt,$TERMINAL -e ncmpcpp}
+super + o ; {e,f,m,n,c}
+  {$TERMINAL -e $EDITOR,$BROWSER,$TERMINAL -e neomutt,$TERMINAL -e ncmpcpp,$TERMINAL -e calcurse}
 
-super + shift + {l, Tab, e}
-  {slock, keyboard, emoji}
+super + shift + {l, Tab, e, r}
+  {slock, keyboard, emoji, dmenu_run -l 30 -fn "monospace:size=14"}
 
 Print
   maim /home/armeeh/Media/Screenshots/$(date +'%d-%m-%Y-%H:%M').jpg
