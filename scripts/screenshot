@@ -1,6 +1,48 @@
 #!/bin/sh
 
+mkdir -p /tmp/.screenshotter/
+
+NAME="$(date +'%d-%m-%Y-%H:%M')"
+
 CUSOR="$(xdotool getmouselocation | sed -e 's/ sc.*//' -e 's/ /\n/' -e 's/\(x\|y\)://g')"
 SCREENCONF="$(xrandr --current | sed -e '/disconnected/d' -e '/^\(\s\|S\)/d' -e 's/.* \([0-9]\+x[0-9]\++[0-9]\++[0-9]\+\) (.*/\1/')"
+SCREENS="$(echo $SCREENCONF | wc -l)"
 
-echo $CUSOR
+if [ "$1" = "current" ]; then
+  i=1
+  while [ $i -le $SCREENS ]; do
+    CONF=$(echo $SCREENCONF | sed "${i}q;d")
+
+    echo $CONF
+
+    W=${CONF%x*}
+    CONF=${CONF#"${W}x"}
+    H=${CONF%%+*}
+    CONF=${CONF#"${H}+"}
+
+    echo "$W $H - $CONF"
+
+    i=$((i + 1))
+  done
+
+  return
+fi
+
+if [ "$1" = "all" ]; then
+  maim /tmp/.screenshotter/pre-change.jpg
+
+  i=1
+  while [ $i -le $SCREENS ]; do
+    echo $(echo $SCREENCONF | sed 's/ /\n/')
+    CONF=$(echo $SCREENCONF | sed "${i}q;d")
+
+    echo "convert /tmp/.screenshotter/pre-change.jpg -crop $CONF ~/Media/Screenshots/screenshot-${NAME}-$i.jpg"
+    convert /tmp/.screenshotter/pre-change.jpg -crop $CONF ~/Media/Screenshots/screenshot-${NAME}-$i.jpg
+
+    i=$((i + 1))
+  done
+
+  return
+fi
+
+maim -s ~/Media/Screenshots/screenshot-${NAME}.jpg

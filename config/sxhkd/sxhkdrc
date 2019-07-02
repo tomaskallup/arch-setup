@@ -16,5 +16,5 @@ super + o ; {e,f,m,n,c}
 super + shift + {l, Tab, e, r}
   {slock, keyboard, emoji, dmenu_run -l 30 -fn "monospace:size=14"}
 
-Print
-  maim /home/armeeh/Media/Screenshots/$(date +'%d-%m-%Y-%H:%M').jpg
+{_, shift} + Print
+  screenshot {all, selection}

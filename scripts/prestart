@@ -1,8 +1,8 @@
 #!/bin/sh
 eval $(gpg-agent --daemon) &
 eval $(ssh-agent) &
-xrandr --output LVDS1 --auto &
 /usr/bin/dunst &
 slack &
-~/.fehbg &
+xrandr --output LVDS1 --auto
+~/.fehbg
 ~/.local/scripts/status &
