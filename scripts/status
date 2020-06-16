@@ -8,15 +8,15 @@ get_date() {
 
 get_battery() {
   local BAT="$(cat /sys/class/power_supply/BAT0/capacity)"
-  local STATE="$(cat /sys/class/power_supply/BAT0/status)"
+  local STATE="$(cat /sys/class/power_supply/AC/online)"
 
   local STATUS=""
 
-  if [ $STATE = "Charging" ]; then
-    STATUS=" [C]"
+  if [ $STATE -eq 1 ]; then
+    STATUS=" [⚡]"
   fi
 
-  echo "🔋: $BAT%$STATUS$SEPARATOR"
+  echo "🔋 $BAT%$STATUS$SEPARATOR"
 }
 
 get_volume() {
@@ -26,7 +26,7 @@ get_volume() {
 
   local ON="$(echo $Master | sed -n "s/.* Left: .*\[\(on\)\].*/\1/p")"
 
-  if [ $ON = "" ]; then
+  if [ -z $ON ]; then
     Side="Mono"
   fi
 
@@ -39,13 +39,13 @@ get_volume() {
     VOL="[M]"
   fi
 
-  echo "🔊: $VOL$SEPARATOR"
+  echo "🔊 $VOL$SEPARATOR"
 }
 
 get_keyboard() {
   local KB="$( setxkbmap -query | grep layout | sed -n "s/layout:\s*\(\w\+\)/\1/p" )"
 
-  echo "⌨: $KB$SEPARATOR"
+  echo "⌨ $KB$SEPARATOR"
 }
 
 get_mail() {
@@ -55,7 +55,7 @@ get_mail() {
     MAILC=0
   fi
 
-  echo "📧: $MAILC$SEPARATOR"
+  echo "📧 $MAILC$SEPARATOR"
 }
 
 get_music() {
@@ -80,10 +80,20 @@ get_music() {
     ICON="$ICON"
   fi
 
-  echo "$ICON: $NAME$SEPARATOR"
+  echo "$ICON $NAME$SEPARATOR"
+}
+
+get_cpu_temp() {
+  local TEMP="$(sensors | grep -oP 'Package.*?\+\K[0-9.]+')"
+
+  TEMP="$TEMP°C"
+
+  local ICON="🌡"
+
+  echo "$ICON $TEMP$SEPARATOR"
 }
 
 while true; do
-  xsetroot -name " $(get_music)$(get_mail)$(get_keyboard)$(get_volume)$(get_battery)$(get_date) "
+  xsetroot -name " $(get_music)$(get_mail)$(get_keyboard)$(get_volume)$(get_battery)$(get_cpu_temp)$(get_date) "
   sleep 0.5
 done

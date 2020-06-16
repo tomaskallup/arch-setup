@@ -5,5 +5,5 @@ KB="$( setxkbmap -query | grep layout | sed -n "s/layout:\s*\(\w\+\)/\1/p" )"
 if [ $KB = "cz" ]; then
   setxkbmap us
 else
-  setxkbmap cz qwerty
+  setxkbmap cz prog
 fi

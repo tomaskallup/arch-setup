@@ -1,0 +1,18 @@
+#!/bin/sh
+
+Master="$(amixer sget Master -D pulse)"
+
+Side="Left"
+
+ON="$(echo $Master | sed -n "s/.* Left: .*\[\(on\)\].*/\1/p")"
+
+if [ -z $ON ]; then
+  Side="Mono"
+fi
+
+ON="$(echo $Master | sed -n "s/.* $Side: .*\[\(on\)\].*/\1/p")"
+VOL="$(echo $Master | sed -n "s/.* $Side: .*\[\([0-9]\+\)%\].*/\1/p")"
+
+echo $ON
+echo $Side
+echo $VOL

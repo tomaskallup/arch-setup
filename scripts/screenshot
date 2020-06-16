@@ -1,48 +1,98 @@
 #!/bin/sh
 
+MODE="default"
+COPY=""
+
+while [ $# -gt 0 ]
+do
+  key="$1"
+
+  case $key in
+    -m|--mode)
+      MODE="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    -c|--copy)
+      COPY="true"
+      shift # past argument
+      ;;
+  esac
+done
+
+# Tmp dir for unprocessed screenshots
+# Used only for current & all modes
 mkdir -p /tmp/.screenshotter/
 
-NAME="$(date +'%d-%m-%Y-%H:%M')"
+NAME="$(date +'%d-%m-%Y-%H:%M:%S')"
 
-CUSOR="$(xdotool getmouselocation | sed -e 's/ sc.*//' -e 's/ /\n/' -e 's/\(x\|y\)://g')"
 SCREENCONF="$(xrandr --current | sed -e '/disconnected/d' -e '/^\(\s\|S\)/d' -e 's/.* \([0-9]\+x[0-9]\++[0-9]\++[0-9]\+\) (.*/\1/')"
-SCREENS="$(echo $SCREENCONF | wc -l)"
+SCREENS="$(echo $SCREENCONF | sed -e 's/ /\n/' | wc -l)"
 
-if [ "$1" = "current" ]; then
+if [ "$MODE" = "current" ]; then
+  maim /tmp/.screenshotter/pre-change.jpg
+
+  CUSOR="$(xdotool getmouselocation | sed -e 's/ sc.*//' -e 's/\(x\|y\)://g')"
+
+  CUSORX=$(echo $CUSOR | sed -e 's/ /\n/' | sed "1q;d")
+  CUSORY=$(echo $CUSOR | sed -e 's/ /\n/' | sed "2q;d")
+  echo "$CUSORX x $CUSORY"
+
   i=1
-  while [ $i -le $SCREENS ]; do
-    CONF=$(echo $SCREENCONF | sed "${i}q;d")
 
-    echo $CONF
+  CURRENT=""
+
+  while [ $i -le $SCREENS ]; do
+    CONF=$(echo $SCREENCONF | sed -e 's/ /\n/' | sed "${i}q;d")
 
     W=${CONF%x*}
     CONF=${CONF#"${W}x"}
     H=${CONF%%+*}
     CONF=${CONF#"${H}+"}
+    X=${CONF%%+*}
+    Y=${CONF#"${X}+"}
 
-    echo "$W $H - $CONF"
+    if [ $CUSORX -ge $X ] && [ $CUSORX -le $(($X + $W)) ] && [ $CUSORY -ge $Y ] && [ $CUSORY -le $(($Y + $H)) ]; then
+      CURRENT=$i
+    fi
 
     i=$((i + 1))
   done
 
-  return
+  CONF=$(echo $SCREENCONF | sed -e 's/ /\n/' | sed "${CURRENT}q;d")
+
+  if [ "$COPY" = "true" ]; then
+    convert /tmp/.screenshotter/pre-change.jpg -crop $CONF -format "png" /tmp/.screenshotter/clip.png
+    cat /tmp/.screenshotter/clip.png | xclip -selection clipboard -t image/png -i
+  else
+    convert /tmp/.screenshotter/pre-change.jpg -crop $CONF ~/Media/Screenshots/${NAME}.jpg
+  fi
+
+  exit 0
 fi
 
-if [ "$1" = "all" ]; then
+if [ "$MODE" = "all" ]; then
   maim /tmp/.screenshotter/pre-change.jpg
 
   i=1
   while [ $i -le $SCREENS ]; do
-    echo $(echo $SCREENCONF | sed 's/ /\n/')
-    CONF=$(echo $SCREENCONF | sed "${i}q;d")
+    CONF=$(echo $SCREENCONF | sed -e 's/ /\n/' | sed "${i}q;d")
 
-    echo "convert /tmp/.screenshotter/pre-change.jpg -crop $CONF ~/Media/Screenshots/screenshot-${NAME}-$i.jpg"
-    convert /tmp/.screenshotter/pre-change.jpg -crop $CONF ~/Media/Screenshots/screenshot-${NAME}-$i.jpg
+    if [ "$COPY" = "true" ]; then
+      echo "Error: cannot copy multiple screens"
+    fi
+
+    convert /tmp/.screenshotter/pre-change.jpg -crop $CONF ~/Media/Screenshots/${NAME}-$i.jpg
 
     i=$((i + 1))
   done
 
-  return
+  exit 0
 fi
 
-maim -s ~/Media/Screenshots/screenshot-${NAME}.jpg
+# Do a selection screenshot
+if [ "$COPY" = "true" ]; then
+  maim -s --format png /dev/stdout | xclip -selection clipboard -t image/png -i
+else
+  maim -s ~/Media/Screenshots/${NAME}.jpg
+fi

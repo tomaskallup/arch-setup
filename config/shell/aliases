@@ -1,0 +1,28 @@
+# vim: ft=sh
+
+#Aliases
+alias ls='ls --color=auto'
+alias ll='ls -alh'
+alias y='yarn'
+alias g='git'
+alias ys='yarn start'
+alias ysa='yarn start-all'
+alias yb='yarn build'
+alias yba='yarn build-all'
+alias yi='yarn install'
+alias ya='yarn add'
+alias yga='yarn global add'
+alias yr='yarn remove'
+alias ygr='yarn global remove'
+alias art='php artisan'
+alias docku='docker-compose up'
+alias dockd='docker-compose down'
+alias dockr='docker-compose down && docker-compose up'
+alias e=$EDITOR
+alias grep='grep --color=auto'
+alias fzfe='$EDITOR $(ag --hidden --ignore .git -g "" | fzy)'
+alias killbg='kill ${${(v)jobstates##*:*:}%=*}'
+
+dockb() {
+    docker exec -it $1 bash
+}

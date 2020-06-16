@@ -1,0 +1,14 @@
+# vim: ft=sh
+export GPG_TTY=$(tty)
+
+export PATH=/home/armeeh/.local/bin:$PATH
+export PATH=/home/armeeh/.yarn/bin:$PATH
+export PATH=/home/armeeh/.local/scripts:$PATH
+export XDG_CONFIG_HOME=$HOME/.config
+export TERMINAL="st"
+export BROWSER="firefox"
+export EDITOR='nvim'
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.sock"
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_DEFAULT_OPTS='--reverse --height 40%'
+export SHELL='/bin/zsh'

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+SPOTIFY=$(dbus-send --session --dest=org.freedesktop.DBus --type=method_call --print-reply /org/freedesktop/DBus org.freedesktop.DBus.ListNames | grep spotify | wc -l)
+
+if [ $SPOTIFY -eq 1 ]; then
+  COMMAND="PlayPause"
+  case $1 in
+    "prev" )
+        COMMAND="Previous" ;;
+    "next" )
+        COMMAND="Next" ;;
+    "stop" )
+        COMMAND="Stop" ;;
+    esac
+  dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.$COMMAND
+else
+  mpc $1
+fi

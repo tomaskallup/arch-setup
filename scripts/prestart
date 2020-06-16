@@ -1,8 +1,9 @@
 #!/bin/sh
 eval $(gpg-agent --daemon) &
-eval $(ssh-agent) &
-/usr/bin/dunst &
+dunst &
 slack &
+xrdb -merge ~/.Xresources
 xrandr --output LVDS1 --auto
 ~/.fehbg
 ~/.local/scripts/status &
+xidlehook --not-when-fullscreen --not-when-audio --timer 600 'lock' '' &

@@ -1,0 +1,4 @@
+#! /bin/sh
+APP="$(awk -F, '{ print $2 };' ~/.config/shell/shortcuts/apps | dmenu -l 20 -fn Monospace-16 -i | grep -f - ~/.config/shell/shortcuts/apps | awk -F, '{ print $1 };')"
+
+eval $APP

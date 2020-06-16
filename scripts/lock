@@ -1,0 +1,5 @@
+#!/bin/sh
+slock & # the ampersand forks the process in bash syntax
+LOCKER_PID=$! # the PID of the lock process you just forked
+sleep 10m # wait 15 seconds
+kill -0 $LOCKER_PID && sudo systemctl hybrid-sleep

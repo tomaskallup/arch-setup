@@ -1,5 +1,5 @@
 XF86Audio{Prev,Next,Stop,Play,Pause}
-  mpc {prev,next,stop,toggle,toggle} -q
+  mediakeys {prev,next,stop,toggle,toggle} -q
 
 XF86Audio{Lower,Raise}Volume
   amixer sset Master -D pulse 5%{-,+}
@@ -10,11 +10,17 @@ XF86AudioMute
 super + shift + Return
   $TERMINAL
 
-super + o ; {e,f,m,n,c}
-  {$TERMINAL -e $EDITOR,$BROWSER,$TERMINAL -e neomutt,$TERMINAL -e ncmpcpp,$TERMINAL -e calcurse}
+super + shift + o
+  dmenuapp
+
+super + o ; {e,f,m,n,c,v}
+  {$TERMINAL -e $EDITOR,$BROWSER,$TERMINAL -e neomutt,$TERMINAL -e ncmpcpp,$TERMINAL -e calcurse, vlc}
 
 super + shift + {l, Tab, e, r}
   {slock, keyboard, emoji, dmenu_run -l 30 -fn "monospace:size=14"}
 
-{_, shift} + Print
-  screenshot {all, selection}
+{_, shift, ctrl} + Print
+  screenshot -m {all, selection, current}
+
+super + {_, shift, ctrl} + Print
+  screenshot -c -m {all, selection, current}
