@@ -1,11 +1,14 @@
 XF86Audio{Prev,Next,Stop,Play,Pause}
-  mediakeys {prev,next,stop,toggle,toggle} -q
+  playerctl {previous,next,stop,play-pause,play-pause}
 
 XF86Audio{Lower,Raise}Volume
   amixer sset Master -D pulse 5%{-,+}
 
 XF86AudioMute
   amixer sset Master -D pulse toggle
+
+XF86MonBrightness{Up,Down}
+  xbacklight -{inc,dec} 10
 
 super + shift + Return
   $TERMINAL
@@ -17,7 +20,7 @@ super + o ; {e,f,m,n,c,v}
   {$TERMINAL -e $EDITOR,$BROWSER,$TERMINAL -e neomutt,$TERMINAL -e ncmpcpp,$TERMINAL -e calcurse, vlc}
 
 super + shift + {l, Tab, e, r}
-  {slock, keyboard, emoji, dmenu_run -l 30 -fn "monospace:size=14"}
+  {lock, keyboard, emoji, dmenu_run -l 30 -fn "monospace:size=14"}
 
 {_, shift, ctrl} + Print
   screenshot -m {all, selection, current}

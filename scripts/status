@@ -93,7 +93,31 @@ get_cpu_temp() {
   echo "$ICON $TEMP$SEPARATOR"
 }
 
+get_bluetooth() {
+  local devices=$(bluetoothctl devices | sed 's/Device \([^ ]*\) .*/\1/')
+
+  local connected=0
+
+  for device in $devices
+  do
+    local info=$(bluetoothctl info $device)
+    local isconnected=$(echo $info | grep 'Connected: yes')
+    if [[ ! -z "$isconnected" ]]; then
+      connected=1
+    fi
+  done
+
+  ICON="[B]"
+  STATUS=""
+
+  if [ $connected -gt 0 ]; then
+    STATUS=' ✨'
+  fi
+
+  echo "$ICON$STATUS$SEPARATOR"
+}
+
 while true; do
-  xsetroot -name " $(get_music)$(get_mail)$(get_keyboard)$(get_volume)$(get_battery)$(get_cpu_temp)$(get_date) "
+  xsetroot -name " $(get_bluetooth)$(get_mail)$(get_keyboard)$(get_volume)$(get_battery)$(get_cpu_temp)$(get_date) "
   sleep 0.5
 done

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+devices=$(bluetoothctl devices | sed 's/Device \([^ ]*\) .*/\1/')
+
+connected=0
+
+for device in $devices
+do
+  info=$(bluetoothctl info $device)
+  connected=$(echo $info | grep 'Connected: yes')
+  if [[ ! -z "$connected" ]]; then
+    connected=1
+  fi
+done
+
+[ $connected ] && echo 'Connected'
