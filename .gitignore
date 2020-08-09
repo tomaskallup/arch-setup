@@ -1,2 +1,4 @@
 config/spicetify/Backup
 config/spicetify/Extracted
+
+__pycache__

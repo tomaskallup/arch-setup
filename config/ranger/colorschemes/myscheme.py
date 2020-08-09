@@ -22,7 +22,7 @@ class Default(ColorScheme):
 
         elif context.in_browser:
             if context.selected:
-                bg = blue
+                attr = reverse
             else:
                 attr = normal
             if context.empty or context.error:

@@ -92,7 +92,8 @@ fi
 
 # Do a selection screenshot
 if [ "$COPY" = "true" ]; then
-  maim -s --format png /dev/stdout | xclip -selection clipboard -t image/png -i
+  flameshot gui
+  #maim -s --format png /dev/stdout | xclip -selection clipboard -t image/png -i
 else
   maim -s ~/Media/Screenshots/${NAME}.jpg
 fi

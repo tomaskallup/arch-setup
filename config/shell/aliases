@@ -22,6 +22,7 @@ alias e=$EDITOR
 alias grep='grep --color=auto'
 alias fzfe='$EDITOR $(ag --hidden --ignore .git -g "" | fzy)'
 alias killbg='kill ${${(v)jobstates##*:*:}%=*}'
+alias rm='rm -i'
 
 dockb() {
     docker exec -it $1 bash
