@@ -1,5 +1,14 @@
 #!/bin/sh
-i3lock-fancy-multimonitor -b=5x2 & # the ampersand forks the process in bash syntax
-LOCKER_PID=$! # the PID of the lock process you just forked
-sleep 10m # wait 15 seconds
-kill -0 $LOCKER_PID && sudo systemctl hybrid-sleep
+LOCKER_PID=$(ps -ax | awk '/[0-9] i3lock/{print $1; exit}') # Find out if the locker is already running
+if [[ -z "$LOCKER_PID" ]]; then
+  echo "[lock script] Locker is not running: $LOCKER_PID (starting)"
+
+  i3lockmore --image-fill /home/armeeh/Media/Wallpapers/3d-fractal-abstract-orange.png -te --lock-icon /home/armeeh/Pictures/lock.png & # Run the locker
+
+  LOCKER_PID=$(sleep 1 && ps -ax | awk '/[0-9] i3lock/{print $1; exit}') # Get PID of the now started locker
+  echo "[lock script] Locker started: $LOCKER_PID"
+else
+  echo "[lock script] Locker is already running: $LOCKER_PID"
+fi
+sleep 10m # wait 10 minutes
+kill -0 $LOCKER_PID 2>/dev/null && sudo systemctl hybrid-sleep

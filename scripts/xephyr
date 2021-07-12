@@ -1,0 +1,4 @@
+#! /bin/sh
+Xephyr :30 -screen 1900x1000 &
+sleep 1
+DISPLAY=:30 $1 &

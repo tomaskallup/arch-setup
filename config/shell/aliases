@@ -15,15 +15,27 @@ alias yga='yarn global add'
 alias yr='yarn remove'
 alias ygr='yarn global remove'
 alias art='php artisan'
+alias yS='yarn $(node -e "console.log(Object.keys(require(\"./package.json\").scripts).join(\"\n\"))" | dmenu -l 20 -p Script)'
 alias docku='docker-compose up'
 alias dockd='docker-compose down'
 alias dockr='docker-compose down && docker-compose up'
 alias e=$EDITOR
 alias grep='grep --color=auto'
-alias fzfe='$EDITOR $(ag --hidden --ignore .git -g "" | fzy)'
 alias killbg='kill ${${(v)jobstates##*:*:}%=*}'
 alias rm='rm -i'
 
 dockb() {
     docker exec -it $1 bash
+}
+
+age() {
+  edit-file $(ag -l $1 | fzf)
+}
+
+fzfe() {
+  edit-file $(ag --hidden --ignore .git -g "" | fzy)
+}
+
+edit-file() {
+  if [[ ! -z "$1" ]] $EDITOR $1;
 }

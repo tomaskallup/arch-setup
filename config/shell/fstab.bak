@@ -1,0 +1,10 @@
+# /dev/nvme0n1p1
+UUID=d644015d-5a28-4acf-a7ba-bd1ff57caa41	/         	ext4      	rw,noatime,nodioread_nolock,discard,nodelalloc	0 0
+
+# /dev/nvme0n1p2
+UUID=f4282f9f-b17e-4e09-b5a7-022b5e11386e	/home     	ext4      	rw,noatime,nodioread_nolock,discard,nodelalloc,data=journal	0 0
+
+# /dev/nvme0n1p3
+UUID=E8F2-7D8F      	/boot/efi 	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro	0 0
+
+UUID=ae60b0ca-ff24-4111-8d97-3f7a0875e5c4	none     	swap      	defaults	0 0

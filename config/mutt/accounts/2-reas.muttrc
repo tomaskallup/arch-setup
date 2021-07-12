@@ -1,9 +1,9 @@
 # vim: filetype=neomuttrc
 # muttrc file for account reas
-set realname = "Tomáš Kallup"
+set realname = "Tomas Kallup"
 set from = "tomas.kallup@reas.cz"
 set sendmail = "msmtp -a reas"
-alias me Tomáš Kallup <tomas.kallup@reas.cz>
+alias me Tomas Kallup <tomas.kallup@reas.cz>
 set folder = "/home/armeeh/.local/share/mail/reas"
 set header_cache = /home/armeeh/.cache/mutt-wizard/reas/headers
 set message_cachedir = /home/armeeh/.cache/mutt-wizard/reas/bodies
@@ -11,15 +11,15 @@ set mbox_type = Maildir
 
 set crypt_autosign = yes
 set crypt_opportunistic_encrypt = yes
-set pgp_self_encrypt = no
-set pgp_default_key  = 
+set pgp_self_encrypt = yes
+set pgp_default_key  = AA484475C951BDBC
 
 bind index,pager gg noop
 bind index,pager g noop
 bind index,pager M noop
 bind index,pager C noop
 bind index gg first-entry
-macro index o "<shell-escape>mailsync -V reas<enter>" "run mbsync to sync reas"
+macro index o "<shell-escape>mbsync -V reas<enter>" "run mbsync to sync reas"
 unmailboxes *
 
 set spoolfile = "+INBOX"

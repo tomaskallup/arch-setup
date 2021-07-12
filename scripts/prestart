@@ -1,9 +1,18 @@
 #!/bin/sh
-eval $(gpg-agent --daemon) &
+#eval $(gpg-agent --daemon) &
 dunst &
 slack &
 xrdb -merge ~/.Xresources
-xrandr --output LVDS1 --auto
+xrandr --newmode "2560x1440" 241.50 2560 2600 2632 2720 1440 1443 1448 1481 -hsync +vsync && xrandr --addmode DP3 2560x1440
+xrandr --auto
 ~/.fehbg
 ~/.local/scripts/status &
-xidlehook --not-when-fullscreen --not-when-audio --timer 600 'lock' '' &
+xidlehook \
+  --not-when-fullscreen \
+  --not-when-audio \
+  --timer 600 \
+    "xrandr --output $(xrandr | grep primary | awk '{print $1}') --brightness .5" \
+    "xrandr --output $(xrandr | grep primary | awk '{print $1}') --brightness 1" \
+  --timer 30 \
+    "xrandr --output $(xrandr | grep primary | awk '{print $1}') --brightness 1; lock" \
+    "" &
