@@ -44,7 +44,7 @@ rename .env.production
 rename atlas-ruian-data-full.ts
 rename BG_ICONS 2.zip
 open_with 1
-delete
 rename icons
-open_with 
 rename atlas-building-divisors.ts
+delete
+open_with 
