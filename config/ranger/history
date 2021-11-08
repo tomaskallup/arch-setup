@@ -1,48 +1,51 @@
-rename get.fn.ts
-shell 
-q!
-open_with e
-open_with $EDITOR
-mkdir newEstimate
-rename LightGBM.pkl
-rename RandomForest.pkl
-rename main.py
-rename flatEstimate
-rename CRandomForest.pkl
-search calculator
-rename ad-estate-modify-unit.ts
-rename model-newsletter-testing.ts
-open_with unzip
-mkdir data
-rename migrate.ts
-rename atlas-data
-rename update-spawn.fn.ts
+search mete
+rename illustration.svg
+search packa
+search sharp
 open_with editor
-rename build-diagrams.yml
-rename Dockerfile
-touch entrypoint.sh
-rename trigger-unit-estimates.ts
-mkdir molecules
-mkdir organisms
-rename leads-address-id-fill.ts
-rename user.module.ts
-rename jwt-auth.guard.ts
-touch pupup.lua
-open_with%space1
-rename prioritize.ts
-rename captain-america-the-winter-soldier-2014-english-yify-272244.zip
-mkdir 
-find f
+rename image-storage.ts
+open_with a
+search deals
+rename ant-man-2015-english-yify-15759.zip
+mkdir functions
+mkdir test-package
 search 
-rename apis-requester
-rename lead-get-estimate-params.ts
-mkdir state
-mkdir municipality
-rename building.ts
-rename address.ts
+search neorg
+open_with 2
+mkdir photos
+rename photo_01.jpg
+rename fill-in-missing-sources.ts
+rename deals-sources.csv
+rename [Ogenerate.fn.ts
+rename generate.fn.ts
+rename CRandomForest.pkl
+rename LightGBM.pkl
+1
+search intl
+rename atlas-map-pointers-all.ts
+search Pkg
+rename auth
+mkdir admin
+rename admin.tsx
 rename .env.production
-rename atlas-ruian-data-full.ts
-rename BG_ICONS 2.zip
+q!
+rename background-colors.scss
+rename border-colors.scss
+rename colors.scss
+rename font-colors.scss
+rename background-colors.module.scss
+rename border-colors.module.scss
+rename colors.module.scss
+rename deploy-house-survey.yaml
+rename incremental.ts
+
+mkdir Personal
+mkdir Backups
+mkdir OSVC
+mkdir Reas
+mkdir Techmates
+open_with 
+rename logo.png
 open_with 1
 rename icons
 rename atlas-building-divisors.ts
