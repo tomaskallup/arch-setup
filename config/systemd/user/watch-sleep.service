@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch for sleep signal to start sleep.target
+
+[Service]
+ExecStart=%h/.local/scripts/watch_sleep
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

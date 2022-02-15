@@ -1,0 +1,10 @@
+[Unit]
+Description=Make sure screen is on when waking up from sleep
+After=sleep.target
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=xset dpms force on
+
+[Install]
+WantedBy=sleep.target

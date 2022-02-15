@@ -1,8 +1,9 @@
 [Unit]
 Description=Lock the screen on resume from suspend
-Before=sleep.unit
+Before=sleep.target
 
 [Service]
+Type=forking
 Environment=DISPLAY=:0
 ExecStart=lock
 

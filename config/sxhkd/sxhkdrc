@@ -17,7 +17,7 @@ super + shift + o
   dmenuapp
 
 super + o ; {e,f,m,n,c,v}
-  {$TERMINAL -e $EDITOR,$BROWSER,$TERMINAL -e neomutt,$TERMINAL -e ncmpcpp,$TERMINAL -e calcurse, vlc}
+  {$TERMINAL -e $EDITOR,$BROWSER,$TERMINAL -e neomutt,obisdian,$TERMINAL -e calcurse, vlc}
 
 super + shift + {l, Tab, e, r}
   {lock, keyboard, emoji, dmenu_run -l 30 -fn "monospace:size=14"}
@@ -27,3 +27,9 @@ super + shift + {l, Tab, e, r}
 
 super + {_, shift, ctrl} + Print
   screenshot -c -m {all, selection, current}
+
+ctrl + {_, shift} + space
+  dunstctl {close, close-all}
+
+ctrl + grave
+  dunstctl history-pop

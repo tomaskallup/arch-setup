@@ -14,3 +14,5 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.sock"
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export FZF_DEFAULT_OPTS='--reverse --height 40%'
 export SHELL='/bin/zsh'
+
+export CLOUDSDK_PYTHON='/bin/python'
