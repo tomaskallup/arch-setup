@@ -24,5 +24,9 @@ precmd () {
     PROMPT="$PROMPT%{$reset_color%}(%F{1}%{$git_branch%}%{$reset_color%}) "
   fi
 
+  TIME_FORMATTED=$(date +"%H:%M:%S")
+
+  PROMPT="$PROMPT%F{1}[%{$reset_color%}$TIME_FORMATTED%F{1}]%{$reset_color%}"
+
   PROMPT="$PROMPT"$'\n'"%F{5}$%{$reset_color%} "
 }
