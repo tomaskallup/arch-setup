@@ -11,4 +11,4 @@ else
   echo "[lock script] Locker is already running: $LOCKER_PID"
 fi
 sleep 10m # wait 10 minutes
-kill -0 $LOCKER_PID 2>/dev/null && sudo systemctl hybrid-sleep
+kill -0 $LOCKER_PID 2>/dev/null && sudo systemctl suspend-then-hibernate

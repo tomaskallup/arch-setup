@@ -3,7 +3,7 @@
 KB="$( setxkbmap -query | grep layout | sed -n "s/layout:\s*\(\w\+\)/\1/p" )"
 
 if [ $KB = "cz" ]; then
-  setxkbmap us
+  setxkbmap us -option compose:ralt
 else
-  setxkbmap cz prog
+  setxkbmap cz coder -option
 fi
